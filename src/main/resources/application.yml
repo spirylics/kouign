@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: kouign
+server:
+  port: 9090
