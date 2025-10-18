@@ -6,6 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Spring Boot application named "kouign" built with Maven. It's a web application using Spring Boot 4.0.0-SNAPSHOT with Java 25. The project includes Spring Boot Actuator for monitoring and management endpoints.
 
+### Application Objective
+
+The goal of this application is to implement the OpenAPI REST API for conversing with Large Language Models (LLMs). This enables standardized, REST-based interactions with various LLM providers through a unified API interface.
+
+Another objective is to leverage the latest features of Java 25 and Spring Boot 4, showcasing modern Java development practices and the newest framework capabilities.
+
 ## Development Commands
 
 ### Build and Run
