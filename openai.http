@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:9090
+@version = v1
+@apiUrl = {{baseUrl}}/api/{{version}}
+
+### health
+GET {{baseUrl}}/actuator/health
+Accept: application/json
+
+### get models
+GET {{apiUrl}}/models
+Accept: application/json
