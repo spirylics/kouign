@@ -36,51 +36,66 @@ Another objective is to leverage the latest features of Java 25 and Spring Boot 
 
 ## Architecture
 
-This application follows **Hexagonal Architecture** (Ports & Adapters) principles with **Domain-Driven Design** and **Clean Code** practices.
+This application follows **Hexagonal Architecture** (Ports & Adapters) principles with **Domain-Driven Design** and **Clean Code** practices, with a simplified and pragmatic approach.
 
 ### Architectural Layers
 
 1. **Domain** (`fr.spirylics.kouign.domain`)
    - Pure business logic, independent of frameworks
-   - Domain entities, value objects, and aggregates
-   - Domain services and business rules
+   - Domain entities as Java records
+   - Domain services implementing business rules
+   - **Ports defined within domain**:
+     - `domain.model.in`: Inbound ports (service interfaces)
+     - `domain.model.out`: Outbound ports (repository interfaces)
+   - Service implementations using internal record-based use cases
    - No dependencies on outer layers
 
 2. **Application** (`fr.spirylics.kouign.application`)
-   - Use cases and application services
-   - Orchestrates domain logic
-   - Defines input/output ports (interfaces)
-   - Transaction boundaries
+   - REST controllers exposing domain services
+   - Direct exposure of domain entities (no DTOs)
+   - Dependency injection of domain services
+   - Acts as the entry point for external requests
 
 3. **Infrastructure** (`fr.spirylics.kouign.infrastructure`)
-   - Adapters implementing ports
-   - Persistence adapters (repositories)
+   - Adapters implementing outbound ports
+   - Repository implementations
    - External service adapters
    - Framework-specific implementations
 
-4. **Presentation** (`fr.spirylics.kouign.presentation`)
-   - REST controllers, DTOs
-   - Input adapters (API layer)
-   - Request/response mapping
+4. **Config** (`fr.spirylics.kouign.config`)
+   - Spring Bean configuration
+   - Wiring of domain services and repositories
 
 ### Design Principles
 
-- **Dependency Rule**: Dependencies point inward (Presentation → Application → Domain)
+- **Dependency Rule**: Dependencies point inward (Application → Domain ← Infrastructure)
 - **Domain Isolation**: Domain layer has no external dependencies
-- **Ports & Adapters**: Application defines interfaces, infrastructure implements them
+- **Ports in Domain**: Ports (interfaces) are part of the domain, not the application layer
+- **No DTOs**: Domain entities are directly exposed via REST APIs (using Java records)
+- **Record-based Use Cases**: Business logic encapsulated in internal records within service implementations
 - **Clean Code**: SOLID principles, meaningful names, small functions
-- **DDD Patterns**: Entities, Value Objects, Aggregates, Repositories, Domain Events
+- **DDD Patterns**: Entities as records, Repositories, Domain Services
+
+### Key Architectural Decisions
+
+- **Simplified layering**: Merged presentation into application layer for pragmatic simplicity
+- **Direct entity exposure**: Domain records serve as both domain model and API contract
+- **Ports co-located with domain**: Inbound (`in`) and outbound (`out`) ports are subpackages of domain aggregates
+- **Record-based pattern**: Use cases implemented as records within service implementations for conciseness
 
 ## Project Structure
 
 - **Package**: `fr.spirylics.kouign`
-- **Source code**: Hexagonal architecture structure
-  - `domain/`: Core business logic
-  - `application/`: Use cases and ports
-  - `infrastructure/`: Adapters and implementations
-  - `presentation/`: REST APIs and DTOs
-- **Resources**: `src/main/resources/application.yml`
-- **Test configuration**: Uses Testcontainers for integration testing
+- **Source code**: Simplified hexagonal architecture
+  - `domain/`: Core business logic and ports
+    - `domain.model/`: Model entity (record)
+    - `domain.model.in/`: Inbound ports (service interfaces)
+    - `domain.model.out/`: Outbound ports (repository interfaces)
+    - `domain.model/ModelServiceImpl`: Service implementation with internal use case records
+  - `application/`: REST controllers
+  - `infrastructure/`: Repository implementations
+  - `config/`: Spring configuration
+- **Resources**: `src/main/resources/application.yml`, `src/main/resources/lombok.config`
 
 ## Key Dependencies
 
@@ -94,9 +109,10 @@ This application follows **Hexagonal Architecture** (Ports & Adapters) principle
 ## Notes
 
 - The project uses Spring Boot DevTools for automatic restarts during development
-- Lombok is configured for annotation processing
+- Lombok is configured with fluent and chained accessors (`lombok.config`)
 - Docker Compose support is available but no services are currently configured
 - The project is set up for both traditional JVM and GraalVM native compilation
+- REST APIs directly expose domain records without intermediate DTOs
 
 ## Project Instructions
 
