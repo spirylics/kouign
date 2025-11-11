@@ -12,14 +12,14 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/{version}/models")
 @RequiredArgsConstructor
 public class ModelsController {
 
     @Getter
     final ModelService modelService;
 
-    @GetMapping(value = "/{version}/models", version = "1.0")
+    @GetMapping(version = "1.0")
     public List<Model> list() {
         return getModelService().find();
     }
