@@ -1,5 +1,7 @@
 package fr.spirylics.kouign.config;
 
+import fr.spirylics.kouign.domain.chat.ChatServiceImpl;
+import fr.spirylics.kouign.domain.chat.in.ChatService;
 import fr.spirylics.kouign.domain.model.ModelServiceImpl;
 import fr.spirylics.kouign.domain.model.in.ModelService;
 import fr.spirylics.kouign.domain.model.out.ModelRepository;
@@ -13,5 +15,10 @@ public class ApplicationConfig {
     @Bean
     ModelService modelService(final ModelRepository modelRepository) {
         return new ModelServiceImpl(modelRepository);
+    }
+
+    @Bean
+    ChatService chatService() {
+        return new ChatServiceImpl();
     }
 }

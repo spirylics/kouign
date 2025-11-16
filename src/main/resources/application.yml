@@ -4,11 +4,21 @@ spring:
   threads:
     virtual:
       enabled: true
+  ai:
+    openai:
+      base-url: http://localhost/ai/ollama/v1/chat/completions
   mvc:
     apiversion:
       use:
         path-segment: 1
       default: 1.0
+
+kouign:
+  models:
+    - id: ker
+      name: Ker
+      created: 2024-05-13T00:00:00Z
+      ownedBy: me
 
 server:
   port: 9090
@@ -36,10 +46,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-kouign:
-  models:
-    - id: ker
-      name: Ker
-      created: 2024-05-13T00:00:00Z
-      ownedBy: me
