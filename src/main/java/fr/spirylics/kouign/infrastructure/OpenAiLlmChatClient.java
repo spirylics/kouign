@@ -4,6 +4,7 @@ import fr.spirylics.kouign.domain.chat.out.LlmChatClient;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClient.CallResponseSpec;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -12,10 +13,11 @@ import org.springframework.ai.chat.prompt.Prompt;
 @RequiredArgsConstructor
 public class OpenAiLlmChatClient implements LlmChatClient {
     @Getter
+    @Nullable
     final ChatClient chatClient;
 
     @Override
     public CallResponseSpec call(final Prompt prompt) {
-        return getChatClient().prompt(prompt).call();
+        throw new UnsupportedOperationException("OpenAI LLM Chat Client is not implemented yet");
     }
 }

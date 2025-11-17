@@ -20,32 +20,32 @@ public class ChatController {
         return chatService.completions(prompt);
     }
 
-//    private SseEmitter completionsStream(final ChatRequest request) {
-//        final var emitter = new SseEmitter();
-//        final var objectMapper = new ObjectMapper();
-//
-//        chatService.completionsStream(
-//            request,
-//            chunk -> {
-//                try {
-//                    final var json = objectMapper.writeValueAsString(chunk);
-//                    emitter.send(SseEmitter.event()
-//                        .data("data: " + json + "\n\n"));
-//                } catch (Exception e) {
-//                    emitter.completeWithError(e);
-//                }
-//            },
-//            () -> {
-//                try {
-//                    emitter.send(SseEmitter.event()
-//                        .data("data: [DONE]\n\n"));
-//                    emitter.complete();
-//                } catch (Exception e) {
-//                    emitter.completeWithError(e);
-//                }
-//            }
-//        );
-//
-//        return emitter;
-//    }
+    // private SseEmitter completionsStream(final ChatRequest request) {
+    // final var emitter = new SseEmitter();
+    // final var objectMapper = new ObjectMapper();
+    //
+    // chatService.completionsStream(
+    // request,
+    // chunk -> {
+    // try {
+    // final var json = objectMapper.writeValueAsString(chunk);
+    // emitter.send(SseEmitter.event()
+    // .data("data: " + json + "\n\n"));
+    // } catch (Exception e) {
+    // emitter.completeWithError(e);
+    // }
+    // },
+    // () -> {
+    // try {
+    // emitter.send(SseEmitter.event()
+    // .data("data: [DONE]\n\n"));
+    // emitter.complete();
+    // } catch (Exception e) {
+    // emitter.completeWithError(e);
+    // }
+    // }
+    // );
+    //
+    // return emitter;
+    // }
 }
