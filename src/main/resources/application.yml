@@ -6,7 +6,7 @@ spring:
       enabled: true
   ai:
     openai:
-      base-url: http://localhost/ai/ollama/v1/chat/completions
+      base-url: http://localhost/ai/ollama/v1
   mvc:
     apiversion:
       use:
