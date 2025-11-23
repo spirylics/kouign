@@ -2,7 +2,6 @@ package fr.spirylics.kouign.application;
 
 import fr.spirylics.kouign.domain.chat.in.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,8 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping(path = "/completions", version = "1.0")
-    public Object completions(@RequestBody final Prompt prompt) {
-        return chatService.completions(prompt);
+    public Object completions(@RequestBody final ChatCompletionRequest request) {
+        return chatService.completions(request.toPrompt());
     }
 
     // private SseEmitter completionsStream(final ChatRequest request) {

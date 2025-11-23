@@ -116,6 +116,10 @@ This application follows **Hexagonal Architecture** (Ports & Adapters) principle
 
 ## Project Instructions
 
+- **NEVER start the application yourself**. The application is already running and uses Spring Boot DevTools which automatically reloads when code changes are detected. Do not use `mvn spring-boot:run` or any command to start the application.
+
+- **Avoid code comments**. Only add comments when absolutely necessary for very complex cases. The code should be self-explanatory through clear naming and structure.
+
 - Always use context7 when I need code generation, setup or configuration steps, or
   library/API documentation. This means you should automatically use the Context7 MCP
   tools to resolve library id and get library docs without me having to explicitly ask.
