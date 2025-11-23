@@ -127,3 +127,7 @@ This application follows **Hexagonal Architecture** (Ports & Adapters) principle
 - Use the chrome-devtools-mcp MCP tools when working on frontend-related tasks. This includes
   testing, debugging, or inspecting the web interface, taking screenshots, analyzing performance,
   or interacting with the page elements.
+
+- Use the intellij MCP tools for IDE-related operations. This includes searching for files,
+  exploring the codebase structure, analyzing code symbols, refactoring, and inspecting project
+  configuration. Prefer IntelliJ tools over command-line alternatives for better integration.
