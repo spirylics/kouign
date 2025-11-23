@@ -2,7 +2,6 @@ package fr.spirylics.kouign.application;
 
 import fr.spirylics.kouign.domain.chat.in.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

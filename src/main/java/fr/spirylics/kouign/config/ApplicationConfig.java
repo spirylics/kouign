@@ -24,23 +24,23 @@ public class ApplicationConfig {
         return new ModelServiceImpl(modelRepository);
     }
 
-     @Bean
-     OpenAiApi openAiApi(@Value("${spring.ai.openai.base-url}") final String baseUrl) {
-     return OpenAiApi.builder()
-     .baseUrl(baseUrl)
-     .apiKey("apiKey")
-     .build();
-     }
+    @Bean
+    OpenAiApi openAiApi(@Value("${spring.ai.openai.base-url}") final String baseUrl) {
+        return OpenAiApi.builder()
+                .baseUrl(baseUrl)
+                .apiKey("apiKey")
+                .build();
+    }
 
-     @Bean
-     ChatModel chatModel(final OpenAiApi openAiApi) {
-     return OpenAiChatModel.builder().openAiApi(openAiApi).build();
-     }
+    @Bean
+    ChatModel chatModel(final OpenAiApi openAiApi) {
+        return OpenAiChatModel.builder().openAiApi(openAiApi).build();
+    }
 
-     @Bean
-     ChatClient chatClient(final ChatModel chatModel) {
-     return ChatClient.builder(chatModel).build();
-     }
+    @Bean
+    ChatClient chatClient(final ChatModel chatModel) {
+        return ChatClient.builder(chatModel).build();
+    }
 
     @Bean
     LlmChatClient llmChatClient(final ChatClient chatClient) {

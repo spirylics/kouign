@@ -27,13 +27,6 @@ public record ChatCompletionRequest(
         @JsonProperty("logit_bias") @Nullable Map<String, Integer> logitBias,
         @Nullable String user
 ) {
-    public record Message(
-            String role,
-            String content,
-            @Nullable String name
-    ) {}
-
-
     public Prompt toPrompt() {
         var aiMessages = messages.stream()
                 .<org.springframework.ai.chat.messages.Message>map(msg -> switch (msg.role.toLowerCase(Locale.ROOT)) {
@@ -55,5 +48,12 @@ public record ChatCompletionRequest(
         if (stop != null) optionsBuilder.stopSequences(stop);
 
         return new Prompt(aiMessages, optionsBuilder.build());
+    }
+
+    public record Message(
+            String role,
+            String content,
+            @Nullable String name
+    ) {
     }
 }

@@ -4,7 +4,6 @@ import fr.spirylics.kouign.domain.chat.in.ChatService;
 import fr.spirylics.kouign.domain.chat.out.LlmChatClient;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.client.ChatClient.CallResponseSpec;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 
