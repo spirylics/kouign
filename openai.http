@@ -20,7 +20,7 @@ Accept: application/json
   "messages": [
     {
       "role": "user",
-      "content": "1 + 1 = ?"
+      "content": "1 + 2 = ?"
     }
   ],
   "temperature": 0.7,
