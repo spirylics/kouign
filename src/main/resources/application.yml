@@ -6,12 +6,18 @@ spring:
       enabled: true
   ai:
     openai:
-      base-url: http://localhost/ai/ollama/v1
+      base-url: http://localhost/ai/ollama
   mvc:
     apiversion:
       use:
         path-segment: 1
       default: 1.0
+  web:
+    error:
+      include-message: always
+      include-binding-errors: always
+      include-stacktrace: always
+      include-exception: true
 
 kouign:
   models:
@@ -22,11 +28,6 @@ kouign:
 
 server:
   port: 9090
-  error:
-    include-message: always
-    include-binding-errors: always
-    include-stacktrace: always
-    include-exception: true
 
 logging:
   level:
