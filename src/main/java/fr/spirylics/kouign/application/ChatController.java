@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatController {
 
     private final ChatService chatService;
-    private final ChatCompletionResponseMapper responseMapper;
 
     @PostMapping(path = "/completions", version = "1.0")
     public ChatCompletionResponse completions(@RequestBody final ChatCompletionRequest request) {
         var clientResponse = chatService.completions(request.toPrompt());
-        return responseMapper.map(clientResponse);
+        return ChatCompletionResponse.from(clientResponse);
     }
 
     // private SseEmitter completionsStream(final ChatRequest request) {
