@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 
+import java.util.function.Consumer;
+
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
     @Getter
@@ -15,5 +17,14 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatClientResponse completions(Prompt prompt) {
         return getLlmChatClient().call(prompt).chatClientResponse();
+    }
+
+    @Override
+    public void stream(Prompt prompt, Consumer<ChatClientResponse> onNext, Runnable onComplete) {
+        getLlmChatClient().stream(prompt)
+                .chatClientResponse()
+                .doOnNext(onNext)
+                .doOnComplete(onComplete)
+                .subscribe();
     }
 }
