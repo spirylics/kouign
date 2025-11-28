@@ -9,12 +9,10 @@ mvn spring-boot:run
 ```
 
 ```bash
-sdk use java 25-graal
 mvn native:compile -Pnative
 ```
 
 ```bash
-sdk use java 25-graal
 mvn spring-boot:build-image -Pnative
 ```
 
