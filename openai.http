@@ -94,8 +94,5 @@ Accept: application/json
   "presence_penalty": 0.6
 }
 
-### get sugar
-GET {{apiUrl}}/sugar
-
 ### get sugar gatherer
-GET {{apiUrl}}/sugar/gatherer
+GET {{apiUrl}}/sugar/fold?numbers=1,4,3
