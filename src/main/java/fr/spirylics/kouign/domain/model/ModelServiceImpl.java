@@ -2,6 +2,7 @@ package fr.spirylics.kouign.domain.model;
 
 import fr.spirylics.kouign.domain.model.in.ModelService;
 import fr.spirylics.kouign.domain.model.out.ModelRepository;
+import java.util.SequencedSet;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +16,14 @@ public class ModelServiceImpl implements ModelService {
     final ModelRepository repository;
 
     @Override
-    public List<Model> find() {
+    public SequencedSet<Model> find() {
         return new Find(getRepository()).execute();
     }
 }
 
 @Slf4j
 record Find(ModelRepository repository) {
-    List<Model> execute() {
+    SequencedSet<Model> execute() {
         final var models = repository().findAll();
         log.info("models: {}", models.getFirst().created().getNano());
         return models;
