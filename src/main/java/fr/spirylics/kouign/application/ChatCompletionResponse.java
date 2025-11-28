@@ -1,86 +1,58 @@
 package fr.spirylics.kouign.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 import lombok.Builder;
 import org.jspecify.annotations.Nullable;
 import org.springframework.ai.chat.client.ChatClientResponse;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
-
 @Builder
-public record ChatCompletionResponse(
-        String id,
-        String object,
-        long created,
-        String model,
-        List<Choice> choices,
-        Usage usage
-) {
+public record ChatCompletionResponse(String id, String object, long created, String model, List<Choice> choices,
+                                     Usage usage) {
 
-    public static ChatCompletionResponse from(ChatClientResponse clientResponse) {
+    public static ChatCompletionResponse from(ChatClientResponse clientResponse)
+    {
         var chatResponse = clientResponse.chatResponse();
         var result = chatResponse.getResult();
 
-        var message = new Message(
-                "assistant",
-                result.getOutput().getText()
-        );
+        var message = new Message("assistant", result.getOutput().getText());
 
-        var choice = new Choice(
-                0,
-                message,
-                null,
-                result.getMetadata().getFinishReason()
-        );
+        var choice = new Choice(0, message, null, result.getMetadata().getFinishReason());
 
         var metadata = chatResponse.getMetadata();
         var usage = mapUsage(metadata.getUsage());
 
-        return ChatCompletionResponse.builder()
-                .id(generateId())
-                .object("chat.completion")
-                .created(Instant.now().getEpochSecond())
-                .model(metadata.getModel())
-                .choices(List.of(choice))
-                .usage(usage)
-                .build();
+        return ChatCompletionResponse.builder().id(generateId()).object("chat.completion")
+                .created(Instant.now().getEpochSecond()).model(metadata.getModel()).choices(List.of(choice))
+                .usage(usage).build();
     }
 
-    private static Usage mapUsage(org.springframework.ai.chat.metadata.Usage aiUsage) {
+    private static Usage mapUsage(org.springframework.ai.chat.metadata.Usage aiUsage)
+    {
         if (aiUsage == null) {
             return new Usage(0, 0, 0);
         }
 
-        return new Usage(
-                Math.toIntExact(aiUsage.getPromptTokens()),
-                Math.toIntExact(aiUsage.getCompletionTokens()),
-                Math.toIntExact(aiUsage.getTotalTokens())
-        );
+        return new Usage(Math.toIntExact(aiUsage.getPromptTokens()), Math.toIntExact(aiUsage.getCompletionTokens()),
+                Math.toIntExact(aiUsage.getTotalTokens()));
     }
 
-    private static String generateId() {
+    private static String generateId()
+    {
         return "chatcmpl-" + UUID.randomUUID().toString().replace("-", "").substring(0, 29);
     }
-    public record Choice(
-            int index,
-            Message message,
-            @Nullable Object logprobs,
-            @JsonProperty("finish_reason") String finishReason
-    ) {
+
+    public record Choice(int index, Message message, @Nullable Object logprobs,
+                         @JsonProperty("finish_reason") String finishReason) {
     }
 
-    public record Message(
-            String role,
-            String content
-    ) {
+    public record Message(String role, String content) {
     }
 
-    public record Usage(
-            @JsonProperty("prompt_tokens") int promptTokens,
-            @JsonProperty("completion_tokens") int completionTokens,
-            @JsonProperty("total_tokens") int totalTokens
-    ) {
+    public record Usage(@JsonProperty("prompt_tokens") int promptTokens,
+                        @JsonProperty("completion_tokens") int completionTokens,
+                        @JsonProperty("total_tokens") int totalTokens) {
     }
 }

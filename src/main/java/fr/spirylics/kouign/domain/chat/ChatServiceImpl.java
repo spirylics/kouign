@@ -2,29 +2,20 @@ package fr.spirylics.kouign.domain.chat;
 
 import fr.spirylics.kouign.domain.chat.in.ChatService;
 import fr.spirylics.kouign.domain.chat.out.LlmChatClient;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import java.util.function.Consumer;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 
-import java.util.function.Consumer;
-
-@RequiredArgsConstructor
-public class ChatServiceImpl implements ChatService {
-    @Getter
-    final LlmChatClient llmChatClient;
-
+public record ChatServiceImpl(LlmChatClient llmChatClient) implements ChatService {
     @Override
-    public ChatClientResponse completions(Prompt prompt) {
-        return getLlmChatClient().call(prompt).chatClientResponse();
+    public ChatClientResponse completions(Prompt prompt)
+    {
+        return llmChatClient().call(prompt).chatClientResponse();
     }
 
     @Override
-    public void stream(Prompt prompt, Consumer<ChatClientResponse> onNext, Runnable onComplete) {
-        getLlmChatClient().stream(prompt)
-                .chatClientResponse()
-                .doOnNext(onNext)
-                .doOnComplete(onComplete)
-                .subscribe();
+    public void stream(Prompt prompt, Consumer<ChatClientResponse> onNext, Runnable onComplete)
+    {
+        llmChatClient().stream(prompt).chatClientResponse().doOnNext(onNext).doOnComplete(onComplete).subscribe();
     }
 }

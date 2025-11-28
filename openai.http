@@ -96,3 +96,6 @@ Accept: application/json
 
 ### get sugar gatherer
 GET {{apiUrl}}/sugar/fold?numbers=1,4,3
+
+### get sugar template
+GET {{apiUrl}}/sugar/template?name=world
