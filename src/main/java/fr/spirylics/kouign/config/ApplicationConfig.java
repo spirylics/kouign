@@ -20,38 +20,32 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(ModelsProperties.class)
 public class ApplicationConfig {
     @Bean
-    ModelService modelService(final ModelRepository modelRepository)
-    {
+    ModelService modelService(final ModelRepository modelRepository) {
         return new ModelServiceImpl(modelRepository);
     }
 
     @Bean
-    OpenAiApi openAiApi(@Value("${spring.ai.openai.base-url}") final String baseUrl)
-    {
+    OpenAiApi openAiApi(@Value("${spring.ai.openai.base-url}") final String baseUrl) {
         return OpenAiApi.builder().baseUrl(baseUrl).apiKey("apiKey").build();
     }
 
     @Bean
-    ChatModel chatModel(final OpenAiApi openAiApi)
-    {
+    ChatModel chatModel(final OpenAiApi openAiApi) {
         return OpenAiChatModel.builder().openAiApi(openAiApi).build();
     }
 
     @Bean
-    ChatClient chatClient(final ChatModel chatModel)
-    {
+    ChatClient chatClient(final ChatModel chatModel) {
         return ChatClient.builder(chatModel).build();
     }
 
     @Bean
-    LlmChatClient llmChatClient(final ChatClient chatClient)
-    {
+    LlmChatClient llmChatClient(final ChatClient chatClient) {
         return new OpenAiLlmChatClient(chatClient);
     }
 
     @Bean
-    ChatService chatService(final LlmChatClient llmChatClient)
-    {
-        return new ChatServiceImpl(llmChatClient);
+    ChatService chatService(final LlmChatClient llmChatClient, final ModelService modelService) {
+        return new ChatServiceImpl(llmChatClient, modelService);
     }
 }

@@ -2,30 +2,34 @@ package fr.spirylics.kouign.domain.model;
 
 import fr.spirylics.kouign.domain.model.in.ModelService;
 import fr.spirylics.kouign.domain.model.out.ModelRepository;
-import java.util.SequencedSet;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 
-import java.util.List;
+import java.util.stream.Stream;
 
-@RequiredArgsConstructor
-public class ModelServiceImpl implements ModelService {
-    @Getter(AccessLevel.PRIVATE)
-    final ModelRepository repository;
+public record ModelServiceImpl(ModelRepository repository) implements ModelService {
 
     @Override
-    public SequencedSet<Model> find() {
-        return new Find(getRepository()).execute();
+    public Stream<Model> find() {
+        return Find.of(repository()).build().execute();
+    }
+
+    @Override
+    public Stream<Model> findById(final String id) {
+        return Find.of(repository()).id(id).build().execute();
     }
 }
 
 @Slf4j
-record Find(ModelRepository repository) {
-    SequencedSet<Model> execute() {
-        final var models = repository().findAll();
-        log.info("models: {}", models.getFirst().created().getNano());
-        return models;
+@Builder
+record Find(ModelRepository repository, @Nullable String id) {
+    static FindBuilder of(final ModelRepository repository) {
+        return Find.builder().repository(repository);
+    }
+
+    Stream<Model> execute() {
+        return repository().findAll() //
+                .filter(model -> id == null || model.id().equals(id));
     }
 }

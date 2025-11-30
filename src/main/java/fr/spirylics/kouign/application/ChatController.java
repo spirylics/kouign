@@ -2,7 +2,6 @@ package fr.spirylics.kouign.application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.spirylics.kouign.domain.chat.in.ChatService;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/{version}/chat")
@@ -20,8 +21,7 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping(path = "/completions", version = "1.0")
-    public Object completions(@RequestBody final ChatCompletionRequest request)
-    {
+    public Object completions(@RequestBody final ChatCompletionRequest request) {
         if (Boolean.TRUE.equals(request.stream())) {
             return streamCompletions(request);
         }
@@ -29,8 +29,7 @@ public class ChatController {
         return ChatCompletionResponse.from(clientResponse);
     }
 
-    private SseEmitter streamCompletions(ChatCompletionRequest request)
-    {
+    private SseEmitter streamCompletions(ChatCompletionRequest request) {
         var emitter = new SseEmitter();
         var streamId = ChatCompletionStreamResponse.generateId();
 

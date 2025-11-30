@@ -2,9 +2,8 @@ package fr.spirylics.kouign.domain.model.out;
 
 import fr.spirylics.kouign.domain.model.Model;
 
-import java.util.List;
-import java.util.SequencedSet;
+import java.util.stream.Stream;
 
 public interface ModelRepository {
-    SequencedSet<Model> findAll();
+    Stream<Model> findAll();
 }

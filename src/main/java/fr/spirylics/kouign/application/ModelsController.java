@@ -2,7 +2,6 @@ package fr.spirylics.kouign.application;
 
 import fr.spirylics.kouign.domain.model.Model;
 import fr.spirylics.kouign.domain.model.in.ModelService;
-import java.util.SequencedSet;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ public class ModelsController {
     final ModelService modelService;
 
     @GetMapping(version = "1.0")
-    public SequencedSet<Model> list() {
-        return getModelService().find();
+    public List<Model> all() {
+        return getModelService().find().toList();
     }
 }

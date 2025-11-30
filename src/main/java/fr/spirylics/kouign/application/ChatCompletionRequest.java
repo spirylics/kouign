@@ -1,15 +1,16 @@
 package fr.spirylics.kouign.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import org.jspecify.annotations.Nullable;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public record ChatCompletionRequest(String model, List<Message> messages, @Nullable Double temperature,
                                     @JsonProperty("max_tokens") @Nullable Integer maxTokens,
@@ -21,8 +22,7 @@ public record ChatCompletionRequest(String model, List<Message> messages, @Nulla
                                     @JsonProperty("top_p") @Nullable Double topP, @Nullable Integer n,
                                     @JsonProperty("logit_bias") @Nullable Map<String, Integer> logitBias,
                                     @Nullable String user) {
-    public Prompt toPrompt()
-    {
+    public Prompt toPrompt() {
         var aiMessages = messages.stream().<org.springframework.ai.chat.messages.Message>map(
                 msg -> switch (msg.role.toLowerCase(Locale.ROOT)) {
                     case "system" -> new SystemMessage(msg.content);
