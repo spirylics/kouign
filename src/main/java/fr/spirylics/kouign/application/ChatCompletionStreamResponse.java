@@ -1,19 +1,19 @@
 package fr.spirylics.kouign.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import org.jspecify.annotations.Nullable;
-import org.springframework.ai.chat.client.ChatClientResponse;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Builder;
+import org.jspecify.annotations.Nullable;
+import org.springframework.ai.chat.client.ChatClientResponse;
 
 @Builder
 public record ChatCompletionStreamResponse(String id, String object, long created, String model, List<Choice> choices,
                                            @Nullable Usage usage) {
 
-    public static ChatCompletionStreamResponse from(ChatClientResponse clientResponse, String id) {
+    public static ChatCompletionStreamResponse from(ChatClientResponse clientResponse, String id)
+    {
         var chatResponse = clientResponse.chatResponse();
         var result = chatResponse.getResult();
 
@@ -29,12 +29,14 @@ public record ChatCompletionStreamResponse(String id, String object, long create
                 .usage(usage).build();
     }
 
-    private static Usage mapUsage(org.springframework.ai.chat.metadata.Usage aiUsage) {
+    private static Usage mapUsage(org.springframework.ai.chat.metadata.Usage aiUsage)
+    {
         return new Usage(Math.toIntExact(aiUsage.getPromptTokens()), Math.toIntExact(aiUsage.getCompletionTokens()),
                 Math.toIntExact(aiUsage.getTotalTokens()));
     }
 
-    public static String generateId() {
+    public static String generateId()
+    {
         return "chatcmpl-" + UUID.randomUUID().toString().replace("-", "").substring(0, 29);
     }
 

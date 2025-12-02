@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 public class KouignApplication {
 
-    static void main(String[] args) {
+    static void main(String[] args)
+    {
         SpringApplication.run(KouignApplication.class, args);
     }
 

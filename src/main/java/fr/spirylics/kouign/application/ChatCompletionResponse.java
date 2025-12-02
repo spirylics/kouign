@@ -1,19 +1,19 @@
 package fr.spirylics.kouign.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import org.jspecify.annotations.Nullable;
-import org.springframework.ai.chat.client.ChatClientResponse;
-
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import lombok.Builder;
+import org.jspecify.annotations.Nullable;
+import org.springframework.ai.chat.client.ChatClientResponse;
 
 @Builder
 public record ChatCompletionResponse(String id, String object, long created, String model, List<Choice> choices,
                                      Usage usage) {
 
-    public static ChatCompletionResponse from(ChatClientResponse clientResponse) {
+    public static ChatCompletionResponse from(ChatClientResponse clientResponse)
+    {
         var chatResponse = clientResponse.chatResponse();
         var result = chatResponse.getResult();
 
@@ -29,7 +29,8 @@ public record ChatCompletionResponse(String id, String object, long created, Str
                 .usage(usage).build();
     }
 
-    private static Usage mapUsage(org.springframework.ai.chat.metadata.Usage aiUsage) {
+    private static Usage mapUsage(org.springframework.ai.chat.metadata.Usage aiUsage)
+    {
         if (aiUsage == null) {
             return new Usage(0, 0, 0);
         }
@@ -38,7 +39,8 @@ public record ChatCompletionResponse(String id, String object, long created, Str
                 Math.toIntExact(aiUsage.getTotalTokens()));
     }
 
-    private static String generateId() {
+    private static String generateId()
+    {
         return "chatcmpl-" + UUID.randomUUID().toString().replace("-", "").substring(0, 29);
     }
 
