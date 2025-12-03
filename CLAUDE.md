@@ -131,3 +131,8 @@ This application follows **Hexagonal Architecture** (Ports & Adapters) principle
 - Use the intellij MCP tools for IDE-related operations. This includes searching for files,
   exploring the codebase structure, analyzing code symbols, refactoring, and inspecting project
   configuration. Prefer IntelliJ tools over command-line alternatives for better integration.
+
+- To execute HTTP requests from the `kouign.http` file, use the JetBrains MCP terminal tool
+  (`mcp__jetbrains__execute_terminal_command`) with curl commands. Replace variables from the
+  HTTP file with their actual values (e.g., `{{apiUrl}}` becomes `http://localhost:9090/api/v1`).
+  Example: `curl -v "http://localhost:9090/api/v1/itinerary?startAddress=Vannes&endAddress=Paris" -H "Accept: application/json"`
