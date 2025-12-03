@@ -9,7 +9,10 @@ import fr.spirylics.kouign.domain.model.ModelServiceImpl;
 import fr.spirylics.kouign.domain.model.in.ModelService;
 import fr.spirylics.kouign.domain.model.out.ModelRepository;
 import fr.spirylics.kouign.infrastructure.OpenAiLlmChatClient;
+import fr.spirylics.kouign.infrastructure.repository.GeocodingRepository;
 import fr.spirylics.kouign.infrastructure.repository.ItineraryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -18,11 +21,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.support.RestClientHttpServiceGroupConfigurer;
 import org.springframework.web.service.registry.ImportHttpServices;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 @EnableConfigurationProperties(ModelsProperties.class)
-@ImportHttpServices(types = {ItineraryRepository.class})
+@ImportHttpServices(group = "osrm", types = {ItineraryRepository.class})
+@ImportHttpServices(group = "nominatim", types = {GeocodingRepository.class})
 public class ApplicationConfig {
     @Bean
     ModelService modelService(final ModelRepository modelRepository)
@@ -61,8 +73,55 @@ public class ApplicationConfig {
     }
 
     @Bean
-    ItineraryService itineraryService(final ItineraryRepository itineraryRepository)
+    ItineraryService itineraryService(
+        final ItineraryRepository itineraryRepository,
+        final GeocodingRepository geocodingRepository
+    )
     {
-        return new ItineraryServiceImpl(itineraryRepository);
+        return new ItineraryServiceImpl(itineraryRepository, geocodingRepository);
+    }
+
+    @Bean
+    RestClientHttpServiceGroupConfigurer restClientHttpServiceGroupConfigurer()
+    {
+        return groups -> {
+            groups.filterByName("osrm")
+                .forEachClient((group, builder) -> builder
+                    .baseUrl("https://router.project-osrm.org")
+                    .defaultHeader("Accept-Encoding", "identity")
+                    .requestInterceptor(loggingInterceptor("OSRM"))
+                    .build());
+
+            groups.filterByName("nominatim")
+                .forEachClient((group, builder) -> builder
+                    .baseUrl("https://nominatim.openstreetmap.org")
+                    .defaultHeader("User-Agent", "kouign-app")
+                    .requestInterceptor(loggingInterceptor("Nominatim"))
+                    .build());
+        };
+    }
+
+    private ClientHttpRequestInterceptor loggingInterceptor(final String apiName)
+    {
+        final Logger logger = LoggerFactory.getLogger("fr.spirylics.kouign.http." + apiName);
+
+        return (HttpRequest request, byte[] body, ClientHttpRequestExecution execution) -> {
+            logger.info("=== {} Request ===", apiName);
+            logger.info("URI: {}", request.getURI());
+            logger.info("Method: {}", request.getMethod());
+            logger.info("Headers: {}", request.getHeaders());
+
+            if (body.length > 0) {
+                logger.info("Body: {}", new String(body, StandardCharsets.UTF_8));
+            }
+
+            final ClientHttpResponse response = execution.execute(request, body);
+
+            logger.info("=== {} Response ===", apiName);
+            logger.info("Status: {}", response.getStatusCode());
+            logger.info("Headers: {}", response.getHeaders());
+
+            return response;
+        };
     }
 }
