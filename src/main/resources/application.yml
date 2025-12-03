@@ -37,6 +37,8 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.web.servlet.mvc.method.annotation: DEBUG
     org.springframework.boot.web.servlet.error: DEBUG
+    org.springframework.web.client: DEBUG
+    org.springframework.http.client: DEBUG
     fr.spirylics.kouign: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
