@@ -11,6 +11,7 @@ import fr.spirylics.kouign.domain.model.out.ModelRepository;
 import fr.spirylics.kouign.infrastructure.OpenAiLlmChatClient;
 import fr.spirylics.kouign.infrastructure.repository.GeocodingRepository;
 import fr.spirylics.kouign.infrastructure.repository.ItineraryRepository;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
@@ -27,9 +28,6 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.support.RestClientHttpServiceGroupConfigurer;
 import org.springframework.web.service.registry.ImportHttpServices;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @Configuration
 @EnableConfigurationProperties(ModelsProperties.class)
@@ -73,10 +71,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    ItineraryService itineraryService(
-        final ItineraryRepository itineraryRepository,
-        final GeocodingRepository geocodingRepository
-    )
+    ItineraryService itineraryService(final ItineraryRepository itineraryRepository,
+                                      final GeocodingRepository geocodingRepository)
     {
         return new ItineraryServiceImpl(itineraryRepository, geocodingRepository);
     }
@@ -86,18 +82,14 @@ public class ApplicationConfig {
     {
         return groups -> {
             groups.filterByName("osrm")
-                .forEachClient((group, builder) -> builder
-                    .baseUrl("https://router.project-osrm.org")
-                    .defaultHeader("Accept-Encoding", "identity")
-                    .requestInterceptor(loggingInterceptor("OSRM"))
-                    .build());
+                    .forEachClient((group, builder) -> builder.baseUrl("https://router.project-osrm.org")
+                            .defaultHeader("Accept-Encoding", "identity").requestInterceptor(loggingInterceptor("OSRM"))
+                            .build());
 
             groups.filterByName("nominatim")
-                .forEachClient((group, builder) -> builder
-                    .baseUrl("https://nominatim.openstreetmap.org")
-                    .defaultHeader("User-Agent", "kouign-app")
-                    .requestInterceptor(loggingInterceptor("Nominatim"))
-                    .build());
+                    .forEachClient((group, builder) -> builder.baseUrl("https://nominatim.openstreetmap.org")
+                            .defaultHeader("User-Agent", "kouign-app")
+                            .requestInterceptor(loggingInterceptor("Nominatim")).build());
         };
     }
 

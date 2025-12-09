@@ -11,10 +11,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.SequencedSet;
 
-public record ItineraryServiceImpl(
-    ItineraryRepository itineraryRepository,
-    GeocodingRepository geocodingRepository
-) implements ItineraryService {
+public record ItineraryServiceImpl(ItineraryRepository itineraryRepository, GeocodingRepository geocodingRepository)
+        implements ItineraryService {
     @Override
     public SequencedSet<Point> get(final String startAddress, final String endAddress)
     {
@@ -31,9 +29,8 @@ public record ItineraryServiceImpl(
         GeocodingRepository.GeocodingResponse startCoord = startResults.getFirst();
         GeocodingRepository.GeocodingResponse endCoord = endResults.getFirst();
 
-        String coordinates = String.format(Locale.US, "%f,%f;%f,%f",
-            startCoord.longitude(), startCoord.latitude(),
-            endCoord.longitude(), endCoord.latitude());
+        String coordinates = String.format(Locale.US, "%f,%f;%f,%f", startCoord.longitude(), startCoord.latitude(),
+                endCoord.longitude(), endCoord.latitude());
 
         return itineraryRepository.get(coordinates);
     }

@@ -6,8 +6,16 @@
 GET {{baseUrl}}/actuator/health
 Accept: application/json
 
-### get models
+### get models v1
 GET {{apiUrl}}/models
+Accept: application/json
+
+### get models v2
+GET {{baseUrl}}/api/2.0.0/models
+Accept: application/json
+
+### get models v2.1
+GET {{baseUrl}}/api/2.1.0/models
 Accept: application/json
 
 ### chat completions

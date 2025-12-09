@@ -16,16 +16,15 @@ public interface GeocodingRepository {
     List<GeocodingResponse> search(@RequestParam("q") String query);
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    record GeocodingResponse(
-        @JsonProperty("lat") String lat,
-        @JsonProperty("lon") String lon,
-        @JsonProperty("display_name") String displayName
-    ) {
-        public double latitude() {
+    record GeocodingResponse(@JsonProperty("lat") String lat, @JsonProperty("lon") String lon,
+                             @JsonProperty("display_name") String displayName) {
+        public double latitude()
+        {
             return Double.parseDouble(lat);
         }
 
-        public double longitude() {
+        public double longitude()
+        {
             return Double.parseDouble(lon);
         }
     }
