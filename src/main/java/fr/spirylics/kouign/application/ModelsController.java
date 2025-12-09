@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/{version}/models")
 @RequiredArgsConstructor
 public class ModelsController {
-
     @Getter
     final ModelService modelService;
 
-    @GetMapping(version = "1")
+    @GetMapping(version = "1+")
     public List<Model> allV1()
     {
         return getModelService().find().toList();

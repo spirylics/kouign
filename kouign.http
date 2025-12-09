@@ -2,29 +2,33 @@
 @version = v1
 @apiUrl = {{baseUrl}}/api/{{version}}
 
-### health
+### actuator/health
 GET {{baseUrl}}/actuator/health
 Accept: application/json
 
-### get models v1
+### models/v1
 GET {{apiUrl}}/models
 Accept: application/json
 
-### get models v2
-GET {{baseUrl}}/api/2.0.0/models
+### models/v2
+GET {{baseUrl}}/api/v2.0.0/models
 Accept: application/json
 
-### get models v2.1
-GET {{baseUrl}}/api/2.1.0/models
+### models/v2.0.0
+GET {{baseUrl}}/api/v2.0.0/models
 Accept: application/json
 
-### chat completions
+### models/v2.1.0
+GET {{baseUrl}}/api/v2.1.0/models
+Accept: application/json
+
+### chat/completions
 POST {{apiUrl}}/chat/completions
 Content-Type: application/json
 Accept: application/json
 
 {
-  "model": "qwen3-coder:30b",
+  "model": "ker",
   "messages": [
     {
       "role": "user",
@@ -35,24 +39,7 @@ Accept: application/json
   "max_tokens": 100
 }
 
-### qwen
-POST http://localhost/ai/ollama/v1/chat/completions
-Content-Type: application/json
-Accept: application/json
-
-{
-  "model": "qwen3-coder:30b",
-  "messages": [
-    {
-      "role": "user",
-      "content": "1 + 1 = ?"
-    }
-  ],
-  "temperature": 1.0,
-  "max_tokens": 100
-}
-
-### chat completions stream
+### chat/completions_stream
 POST {{apiUrl}}/chat/completions
 Content-Type: application/json
 Accept: application/json
@@ -77,36 +64,21 @@ Accept: application/json
   "presence_penalty": 0.6
 }
 
-### qwen stream
-POST http://localhost/ai/ollama/v1/chat/completions
-Content-Type: application/json
-Accept: application/json
-
-{
-  "model": "qwen3-coder:30b",
-  "messages": [
-    {
-      "role": "system",
-      "content": "You are an code reviewer assistant."
-    },
-    {
-      "role": "user",
-      "content": "Java is better than C#, right ?"
-    }
-  ],
-  "temperature": 0.10000000149011612,
-  "stream": true,
-  "max_tokens": 4096,
-  "max_completion_tokens": 8192,
-  "frequency_penalty": 0.0,
-  "presence_penalty": 0.6
-}
-
-### get sugar gatherer
+### sugar/gatherer
 GET {{apiUrl}}/sugar/fold?numbers=1,4,3
 
-### get sugar template
+### sugar/template
 GET {{apiUrl}}/sugar/template?name=world
 
-### get itinerary
+### itinerary/get
 GET {{apiUrl}}/itinerary?startAddress=Vannes&endAddress=Paris
+
+### calc/add
+GET {{apiUrl}}/calc/add?a=1&b=2
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body === '3', "Result is not 3");
+    });
+%}
