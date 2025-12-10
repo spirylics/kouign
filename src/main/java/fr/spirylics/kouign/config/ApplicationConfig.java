@@ -66,7 +66,9 @@ public class ApplicationConfig {
     {
         return ChatClient.builder(chatModel)
                 .defaultToolCallbacks(SyncMcpToolCallbackProvider.syncToolCallbacks(mcpSyncClients))
-//                .defaultAdvisors(MessageChatMemoryAdvisor.builder(MessageWindowChatMemory.builder().build()).build(), new SimpleLoggerAdvisor())
+                .defaultAdvisors(
+//                        MessageChatMemoryAdvisor.builder(MessageWindowChatMemory.builder().build()).build(),
+                        new SimpleLoggerAdvisor())
                 .build();
     }
 

@@ -1,6 +1,3 @@
-/*
- * Copyright (C) Deveryware S.A.S. All Rights Reserved.
- */
 package fr.spirylics.kouign;
 
 import com.intuit.karate.junit5.Karate;

@@ -19,6 +19,9 @@ spring:
             context7:
               url: http://localhost
               endpoint: /context7/mcp
+            braveSearch:
+              url: http://localhost
+              endpoint: /brave/search/mcp
   mvc:
     apiversion:
       use:
@@ -57,6 +60,7 @@ logging:
     org.springframework.boot.web.servlet.error: DEBUG
     org.springframework.web.client: DEBUG
     org.springframework.http.client: DEBUG
+    org.springframework.ai.chat.client.advisor: DEBUG
     fr.spirylics.kouign: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
