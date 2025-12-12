@@ -1,15 +1,23 @@
 # Kouign
 
 ```bash
-mvn clean package
-```
-
-```bash
 mvn spring-boot:run
 ```
 
 ```bash
+mvn clean package
+```
+
+```bash
+java -jar target/kouign-0.0.1-SNAPSHOT.jar
+```
+
+```bash
 mvn native:compile -Pnative
+```
+
+```bash
+./target/kouign
 ```
 
 ```bash
