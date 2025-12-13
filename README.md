@@ -1,29 +1,47 @@
 # Kouign
 
+## Dev
 ```bash
 mvn spring-boot:run
 ```
 
+## Test
+```bash
+docker run -it --net=host -v ${PWD}:/data ghcr.io/anweber/httpyac:latest --all kouign.http
+```
+
+## Jar
+
+### Build
 ```bash
 mvn clean package
 ```
 
+### Start
 ```bash
 java -jar target/kouign-0.0.1-SNAPSHOT.jar
 ```
 
+## AOT Native
+
+### Build
 ```bash
 mvn native:compile -Pnative
 ```
 
+### Build
 ```bash
 ./target/kouign
 ```
 
+## AOT Native + docker
+
+### Build
 ```bash
 mvn spring-boot:build-image -Pnative
 ```
 
+### Start
 ```bash
 docker run \
   -p 9090:9090 \
@@ -41,6 +59,30 @@ docker run \
   docker.io/library/kouign:0.0.1-SNAPSHOT
 ```
 
+## AOT Cache
+
+### Build
+
 ```bash
-docker run -it --net=host -v ${PWD}:/data ghcr.io/anweber/httpyac:latest --all kouign.http
+TODO
+```
+
+### Start
+
+```bash
+TODO
+```
+
+## AOT Cache + docker
+
+### Build
+
+```bash
+TODO
+```
+
+### Start
+
+```bash
+TODO
 ```
