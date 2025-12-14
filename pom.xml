@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>25</java.version>
+        <classifier>regular</classifier>
     </properties>
     <dependencies>
         <dependency>
@@ -182,6 +183,8 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <classifier>${classifier}</classifier>
+                    <imageName>${name}:${version}-${classifier}</imageName>
                 </configuration>
             </plugin>
         </plugins>
@@ -212,6 +215,12 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>native</id>
+            <properties>
+                <classifier>native</classifier>
+            </properties>
         </profile>
     </profiles>
     <repositories>
