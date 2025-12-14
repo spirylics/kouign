@@ -184,7 +184,12 @@
                         </exclude>
                     </excludes>
                     <classifier>${classifier}</classifier>
-                    <imageName>${project.name}-${classifier}:${project.version}</imageName>
+                    <image>
+                        <name>${project.name}-${classifier}</name>
+                        <tags>
+                            ${project.name}-${classifier}:${project.version},${project.name}-${classifier}:latest
+                        </tags>
+                    </image>
                 </configuration>
             </plugin>
         </plugins>
@@ -217,9 +222,9 @@
             </build>
         </profile>
         <profile>
-            <id>cds</id>
+            <id>aot-cache</id>
             <properties>
-                <classifier>cds</classifier>
+                <classifier>aot-cache</classifier>
                 <spring-boot.build-image.env.BP_JVM_CDS_ENABLED>true</spring-boot.build-image.env.BP_JVM_CDS_ENABLED>
                 <spring-boot.build-image.env.BP_SPRING_AOT_ENABLED>true</spring-boot.build-image.env.BP_SPRING_AOT_ENABLED>
             </properties>
@@ -227,7 +232,7 @@
         <profile>
             <id>native</id>
             <properties>
-                <classifier>native</classifier>
+                <classifier>aot-native</classifier>
             </properties>
         </profile>
     </profiles>

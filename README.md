@@ -37,42 +37,43 @@ mvn spring-boot:build-image
 ### Start
 
 ```bash
-docker run -p 9090:9090 kouign-regular:0.0.1-SNAPSHOT
+docker run -p 9090:9090 kouign-regular:latest
 ```
 
-## CDS / AOT Cache
+## AOT cache
 
 ### Build
 
 ```bash
-mvn package -Pcds
+mvn package -Paot-cache
 ```
 
 ### Training
 
 ```bash
-java -XX:AOTMode=record -XX:AOTConfiguration=target/app.aotconf -Dspring.context.exit=onRefresh -jar target/kouign-*-cds.jar
-java -XX:AOTMode=create -XX:AOTConfiguration=target/app.aotconf -XX:AOTCache=target/app.aot -jar target/kouign-*-cds.jar
+java -XX:AOTMode=record -XX:AOTConfiguration=target/app.aotconf -Dspring.context.exit=onRefresh -jar target/kouign-*-aot-cache.jar
+java -XX:AOTMode=create -XX:AOTConfiguration=target/app.aotconf -XX:AOTCache=target/app.aot -jar target/kouign-*-aot-cache.jar
 ```
+
 
 ### Start
 
 ```bash
-java -XX:AOTCache=target/app.aot -jar target/kouign-*-cds.jar
+java -XX:AOTCache=target/app.aot -jar target/kouign-*-aot-cache.jar
 ```
 
-## CDS / AOT Cache + docker
+## AOT cache + docker
 
 ### Build
 
 ```bash
-mvn spring-boot:build-image -Pcds
+mvn spring-boot:build-image -Paot-cache
 ```
 
 ### Start
 
 ```bash
-docker run -p 9090:9090 kouign-cds:0.0.1-SNAPSHOT
+docker run -p 9090:9090 kouign-aot-cache:latest
 ```
 
 ## AOT Native
