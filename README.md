@@ -67,7 +67,7 @@ java -XX:AOTCache=target/app.aot -jar target/kouign-*-aot-cache.jar
 ### Build
 
 ```bash
-mvn spring-boot:build-image -Paot-cache
+mvn docker:build -Paot-cache
 ```
 
 ### Start

@@ -226,6 +226,38 @@
             <properties>
                 <classifier>aot-cache</classifier>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.48.0</version>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>${project.name}-${classifier}:${project.version}</name>
+                                    <build>
+                                        <dockerFile>${project.basedir}/Dockerfile.aot-cache</dockerFile>
+                                        <tags>
+                                            <tag>latest</tag>
+                                            <tag>${project.version}</tag>
+                                        </tags>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>native</id>
