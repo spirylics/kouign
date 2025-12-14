@@ -184,7 +184,7 @@
                         </exclude>
                     </excludes>
                     <classifier>${classifier}</classifier>
-                    <imageName>${name}:${version}-${classifier}</imageName>
+                    <imageName>${project.name}-${classifier}:${project.version}</imageName>
                 </configuration>
             </plugin>
         </plugins>
@@ -215,6 +215,14 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>cds</id>
+            <properties>
+                <classifier>cds</classifier>
+                <spring-boot.build-image.env.BP_JVM_CDS_ENABLED>true</spring-boot.build-image.env.BP_JVM_CDS_ENABLED>
+                <spring-boot.build-image.env.BP_SPRING_AOT_ENABLED>true</spring-boot.build-image.env.BP_SPRING_AOT_ENABLED>
+            </properties>
         </profile>
         <profile>
             <id>native</id>

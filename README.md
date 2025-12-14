@@ -12,21 +12,21 @@ mvn spring-boot:run
 docker run -it --net=host -v ${PWD}:/data ghcr.io/anweber/httpyac:latest --all kouign.http
 ```
 
-## Classic
+## Regular
 
 ### Build
 
 ```bash
-mvn clean package
+mvn package
 ```
 
 ### Start
 
 ```bash
-java -jar target/kouign-0.0.1-SNAPSHOT-regular.jar
+java -jar target/kouign-*-regular.jar
 ```
 
-## Classic + docker
+## Regular + docker
 
 ### Build
 
@@ -37,42 +37,42 @@ mvn spring-boot:build-image
 ### Start
 
 ```bash
-docker run -p 9090:9090 kouign:0.0.1-SNAPSHOT-regular
+docker run -p 9090:9090 kouign-regular:0.0.1-SNAPSHOT
 ```
 
-## AOT Cache
+## CDS / AOT Cache
 
 ### Build
 
 ```bash
-mvn clean package
+mvn package -Pcds
 ```
 
 ### Training
 
 ```bash
-java -XX:AOTMode=record -XX:AOTConfiguration=app.aotconf -Dspring.context.exit=onRefresh -jar target/kouign-0.0.1-SNAPSHOT.jar
-java -XX:AOTMode=create -XX:AOTConfiguration=app.aotconf -XX:AOTCache=app.aot -jar target/kouign-0.0.1-SNAPSHOT.jar
+java -XX:AOTMode=record -XX:AOTConfiguration=target/app.aotconf -Dspring.context.exit=onRefresh -jar target/kouign-*-cds.jar
+java -XX:AOTMode=create -XX:AOTConfiguration=target/app.aotconf -XX:AOTCache=target/app.aot -jar target/kouign-*-cds.jar
 ```
 
 ### Start
 
 ```bash
-java -XX:AOTCache=app.aot -jar target/kouign-0.0.1-SNAPSHOT.jar
+java -XX:AOTCache=target/app.aot -jar target/kouign-*-cds.jar
 ```
 
-## AOT Cache + docker
+## CDS / AOT Cache + docker
 
 ### Build
 
 ```bash
-mvn spring-boot:build-image -Dspring-boot.build-image.env.BP_JVM_CDS_ENABLED=true -Dspring-boot.build-image.env.BP_SPRING_AOT_ENABLED=true
+mvn spring-boot:build-image -Pcds
 ```
 
 ### Start
 
 ```bash
-docker run -p 9090:9090 kouign:0.0.1-aot
+docker run -p 9090:9090 kouign-cds:0.0.1-SNAPSHOT
 ```
 
 ## AOT Native
