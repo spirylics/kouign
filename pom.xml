@@ -225,8 +225,6 @@
             <id>aot-cache</id>
             <properties>
                 <classifier>aot-cache</classifier>
-                <spring-boot.build-image.env.BP_JVM_CDS_ENABLED>true</spring-boot.build-image.env.BP_JVM_CDS_ENABLED>
-                <spring-boot.build-image.env.BP_SPRING_AOT_ENABLED>true</spring-boot.build-image.env.BP_SPRING_AOT_ENABLED>
             </properties>
         </profile>
         <profile>
