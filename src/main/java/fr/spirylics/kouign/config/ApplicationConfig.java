@@ -1,5 +1,6 @@
 package fr.spirylics.kouign.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.spirylics.kouign.domain.chat.ChatServiceImpl;
 import fr.spirylics.kouign.domain.chat.in.ChatService;
 import fr.spirylics.kouign.domain.chat.in.ItineraryService;
@@ -8,6 +9,8 @@ import fr.spirylics.kouign.domain.itinerary.ItineraryServiceImpl;
 import fr.spirylics.kouign.domain.model.ModelServiceImpl;
 import fr.spirylics.kouign.domain.model.in.ModelService;
 import fr.spirylics.kouign.domain.model.out.ModelRepository;
+import fr.spirylics.kouign.domain.sugar.SugarServiceImpl;
+import fr.spirylics.kouign.domain.sugar.in.SugarService;
 import fr.spirylics.kouign.infrastructure.OpenAiLlmChatClient;
 import fr.spirylics.kouign.infrastructure.repository.GeocodingRepository;
 import fr.spirylics.kouign.infrastructure.repository.ItineraryRepository;
@@ -75,6 +78,18 @@ public class ApplicationConfig {
                                       final GeocodingRepository geocodingRepository)
     {
         return new ItineraryServiceImpl(itineraryRepository, geocodingRepository);
+    }
+
+    @Bean
+    SugarService sugarService()
+    {
+        return new SugarServiceImpl();
+    }
+
+    @Bean
+    ObjectMapper objectMapper()
+    {
+        return new ObjectMapper();
     }
 
     @Bean

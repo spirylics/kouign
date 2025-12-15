@@ -64,8 +64,11 @@ Accept: application/json
   "presence_penalty": 0.6
 }
 
-### sugar/gatherer
-GET {{apiUrl}}/sugar/fold?numbers=1,4,3
+### sugar/random
+GET {{apiUrl}}/sugar/random?size=10
+
+### sugar/random/window
+GET {{apiUrl}}/sugar/randomWindow?size=10&windowSize=2
 
 ### sugar/template
 GET {{apiUrl}}/sugar/template?name=world
