@@ -12,43 +12,44 @@ mvn spring-boot:run
 mvn verify -PITest
 ```
 
-## Regular
+## Deploy
+### Regular
 
-### Build
+#### Build
 
 ```bash
 mvn package
 ```
 
-### Start
+#### Start
 
 ```bash
 java -jar target/kouign-*-regular.jar
 ```
 
-## Regular + docker
+### Regular + docker
 
-### Build
+#### Build
 
 ```bash
 mvn spring-boot:build-image
 ```
 
-### Start
+#### Start
 
 ```bash
 docker run -p 9090:9090 kouign-regular:latest
 ```
 
-## AOT cache
+### AOT cache
 
-### Build
+#### Build
 
 ```bash
 mvn package -Paot-cache
 ```
 
-### Training
+#### Training
 
 ```bash
 java -XX:AOTMode=record -XX:AOTConfiguration=target/app.aotconf -Dspring.context.exit=onRefresh -jar target/kouign-*-aot-cache.jar
@@ -56,49 +57,49 @@ java -XX:AOTMode=create -XX:AOTConfiguration=target/app.aotconf -XX:AOTCache=tar
 ```
 
 
-### Start
+#### Start
 
 ```bash
 java -XX:AOTCache=target/app.aot -jar target/kouign-*-aot-cache.jar
 ```
 
-## AOT cache + docker
+### AOT cache + docker
 
-### Build
+#### Build
 
 ```bash
 mvn docker:build -Paot-cache
 ```
 
-### Start
+#### Start
 
 ```bash
 docker run -p 9090:9090 kouign-aot-cache:latest
 ```
 
-## AOT Native
+### AOT Native
 
-### Build
+#### Build
 
 ```bash
 mvn native:compile -Pnative
 ```
 
-### Build
+#### Start
 
 ```bash
 ./target/kouign
 ```
 
-## AOT Native + docker
+### AOT Native + docker
 
-### Build
+#### Build
 
 ```bash
 mvn spring-boot:build-image -Pnative
 ```
 
-### Start
+#### Start
 
 ```bash
 docker run -p 9090:9090 kouign-native:latest

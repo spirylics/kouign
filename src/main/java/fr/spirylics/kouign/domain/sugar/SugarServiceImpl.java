@@ -7,7 +7,11 @@ import java.util.List;
 import java.util.stream.Gatherers;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import lombok.Lombok;
 import org.apache.commons.lang3.RandomStringUtils;
+
+import static java.lang.Thread.sleep;
 
 public class SugarServiceImpl implements SugarService {
     private final RandomStringUtils randomStringUtils = RandomStringUtils.insecure();
@@ -15,7 +19,15 @@ public class SugarServiceImpl implements SugarService {
     @Override
     public Stream<String> randomStrings(final int size)
     {
-        return IntStream.range(0, size).mapToObj(i -> randomStringUtils.nextAlphabetic(5));
+        return IntStream.range(0, size).mapToObj(i -> {
+            try {
+                sleep(100);
+                return randomStringUtils.nextAlphabetic(5);
+            } catch (final InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw Lombok.sneakyThrow(e);
+            }
+        });
     }
 
     @Override
