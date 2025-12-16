@@ -17,7 +17,7 @@ public record ChatCompletionResponse(String id, String object, long created, Str
         var chatResponse = clientResponse.chatResponse();
         var result = chatResponse.getResult();
 
-        var message = new Message("assistant", result.getOutput().getText());
+        var message = new Message("assistant", String.valueOf(result.getOutput().getText()));
 
         var choice = new Choice(0, message, null, result.getMetadata().getFinishReason());
 
