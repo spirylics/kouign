@@ -9,7 +9,7 @@ mvn spring-boot:run
 ## Test
 
 ```bash
-mvn verify -PITest
+mvn verify
 ```
 
 ## Deploy

@@ -197,6 +197,7 @@
                             ${project.name}-${classifier}:${project.version},${project.name}-${classifier}:latest
                         </tags>
                     </image>
+                    <wait>600</wait>
                 </configuration>
                 <executions>
                     <execution>
