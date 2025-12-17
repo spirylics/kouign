@@ -221,7 +221,7 @@
                 <configuration>
                     <simulationsFolder>src/test/java</simulationsFolder>
                     <includes>
-                        <include>fr.spirylics.kouign.performance.SugarSimulation</include>
+                        <include>fr.spirylics.kouign.SugarSimulation</include>
                     </includes>
                 </configuration>
             </plugin>

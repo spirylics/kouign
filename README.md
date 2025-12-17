@@ -12,6 +12,12 @@ mvn spring-boot:run
 mvn verify
 ```
 
+## Perf
+
+```bash
+mvn gatling:test
+```
+
 ## Deploy
 ### Regular
 
