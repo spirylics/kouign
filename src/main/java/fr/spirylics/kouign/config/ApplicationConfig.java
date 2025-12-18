@@ -33,7 +33,7 @@ import org.springframework.web.client.support.RestClientHttpServiceGroupConfigur
 import org.springframework.web.service.registry.ImportHttpServices;
 
 @Configuration
-@EnableConfigurationProperties(ModelsProperties.class)
+@EnableConfigurationProperties(KouignProperties.class)
 @ImportHttpServices(group = "osrm", types = {ItineraryRepository.class})
 @ImportHttpServices(group = "nominatim", types = {GeocodingRepository.class})
 public class ApplicationConfig {
@@ -81,9 +81,9 @@ public class ApplicationConfig {
     }
 
     @Bean
-    SugarService sugarService()
+    SugarService sugarService(final KouignProperties kouignProperties)
     {
-        return new SugarServiceImpl();
+        return new SugarServiceImpl(kouignProperties.randomPause());
     }
 
     @Bean

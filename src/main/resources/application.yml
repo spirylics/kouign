@@ -30,6 +30,7 @@ kouign:
       created: 2024-05-13T00:00:00Z
       ownedBy: me
       baseModel: "qwen3-coder:30b"
+  random-pause: "PT0.2S"
 
 server:
   port: 9090

@@ -1,6 +1,9 @@
 package fr.spirylics.kouign.domain.sugar;
 
+import static org.apache.commons.lang3.ThreadUtils.sleepQuietly;
+
 import fr.spirylics.kouign.domain.sugar.in.SugarService;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,25 +11,25 @@ import java.util.stream.Gatherers;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import lombok.Lombok;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import static java.lang.Thread.sleep;
-
+@Slf4j
+@RequiredArgsConstructor
 public class SugarServiceImpl implements SugarService {
     private final RandomStringUtils randomStringUtils = RandomStringUtils.insecure();
+    private final Duration pause;
 
     @Override
     public Stream<String> randomStrings(final int size)
     {
         return IntStream.range(0, size).mapToObj(i -> {
-            try {
-                sleep(100);
-                return randomStringUtils.nextAlphabetic(5);
-            } catch (final InterruptedException e) {
-                Thread.currentThread().interrupt();
-                throw Lombok.sneakyThrow(e);
-            }
+            log.info("--> ramdom");
+            sleepQuietly(pause);
+            final var result = randomStringUtils.nextAlphabetic(5);
+            log.info("<-- ramdom result: {}", result);
+            return result;
         });
     }
 
