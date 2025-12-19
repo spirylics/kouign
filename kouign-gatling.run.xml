@@ -46,7 +46,7 @@
             <list>
               <option value="gatling:test" />
               <option value="-Dkouign.during=PT1M" />
-              <option value="-Dkouign.users=100" />
+              <option value="-Dkouign.users=1000" />
               <option value="-Dmaven.main.skip=true" />
               <option value="-Dmaven.test.skip=false" />
               <option value="-DskipTests=false" />

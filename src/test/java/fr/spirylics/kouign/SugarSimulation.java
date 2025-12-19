@@ -20,7 +20,12 @@ public class SugarSimulation extends Simulation {
         ScenarioBuilder randomScenario = scenario("Test random endpoint")
                 .during(during).on(exec(karateFeature("classpath:fr/spirylics/kouign/sugar.feature")));
 
-        setUp(randomScenario.injectOpen(constantUsersPerSec(users).during(Duration.ofSeconds(1)))).protocols(protocol)
-                .maxDuration(during.plusSeconds(20));
+        setUp(
+                randomScenario.injectOpen(
+                        rampUsers(users).during(Duration.ofSeconds(10)),
+                        constantUsersPerSec(users / 10.0).during(during.minus(Duration.ofSeconds(10))).randomized()
+                )
+        ).protocols(protocol)
+                .maxDuration(during.plusSeconds(30));
     }
 }

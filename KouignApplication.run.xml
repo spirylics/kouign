@@ -14,17 +14,22 @@
       <param>
         <option name="enabled" value="true" />
         <option name="name" value="kouign.random-pause" />
-        <option name="value" value="PT2S" />
+        <option name="value" value="PT0.1S" />
       </param>
       <param>
         <option name="enabled" value="true" />
         <option name="name" value="server.tomcat.max-connections" />
-        <option name="value" value="8000" />
+        <option name="value" value="10000" />
       </param>
       <param>
         <option name="enabled" value="true" />
         <option name="name" value="server.tomcat.threads.max" />
-        <option name="value" value="200" />
+        <option name="value" value="50" />
+      </param>
+      <param>
+        <option name="enabled" value="true" />
+        <option name="name" value="server.tomcat.accept-count" />
+        <option name="value" value="100" />
       </param>
     </additionalParameters>
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />

@@ -15,7 +15,7 @@ mvn verify
 ## Perf
 
 ```bash
-mvn gatling:test -Dkouign.during=PT1M -Dkouign.users=10000
+mvn gatling:test -Dkouign.during=PT1M -Dkouign.users=50
 ```
 
 ## Deploy

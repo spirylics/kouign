@@ -33,6 +33,6 @@ record Find(ModelRepository repository, @Nullable String id) {
     Stream<Model> execute()
     {
         return repository().findAll() //
-                .filter(model -> id == null || model.id().equals(id));
+                .filter(model -> model.id().equals(id));
     }
 }

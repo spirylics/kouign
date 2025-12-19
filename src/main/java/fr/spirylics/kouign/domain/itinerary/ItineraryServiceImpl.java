@@ -17,12 +17,12 @@ public record ItineraryServiceImpl(ItineraryRepository itineraryRepository, Geoc
     public SequencedSet<Point> get(final String startAddress, final String endAddress)
     {
         List<GeocodingRepository.GeocodingResponse> startResults = geocodingRepository.search(startAddress);
-        if (startResults == null || startResults.isEmpty()) {
+        if (startResults.isEmpty()) {
             return new LinkedHashSet<>();
         }
 
         List<GeocodingRepository.GeocodingResponse> endResults = geocodingRepository.search(endAddress);
-        if (endResults == null || endResults.isEmpty()) {
+        if (endResults.isEmpty()) {
             return new LinkedHashSet<>();
         }
 
