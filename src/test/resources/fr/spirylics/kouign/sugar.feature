@@ -2,6 +2,8 @@ Feature: Sugar API Tests
 
   Background:
     * url 'http://localhost:9090/api/v1/sugar'
+    * configure readTimeout = 30000
+    * configure connectTimeout = 5000
 
   Scenario: random
     Given path 'random'

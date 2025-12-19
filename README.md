@@ -15,7 +15,7 @@ mvn verify
 ## Perf
 
 ```bash
-mvn gatling:test -Dkouign.during=PT2M -Dkouign.usersPerSec=2
+mvn gatling:test -Dkouign.during=PT1M -Dkouign.users=10000
 ```
 
 ## Deploy
@@ -108,5 +108,5 @@ mvn spring-boot:build-image -Pnative
 #### Start
 
 ```bash
-docker run -p 9090:9090 kouign-native:latest
+docker run -p 9090:9090 kouign-aot-native:latest
 ```
