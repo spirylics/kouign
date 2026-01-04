@@ -15,14 +15,20 @@ public record ChatCompletionStreamResponse(String id, String object, long create
     public static ChatCompletionStreamResponse from(ChatClientResponse clientResponse, String id)
     {
         var chatResponse = clientResponse.chatResponse();
+        if (chatResponse == null) {
+            throw new IllegalArgumentException("chatResponse must not be null");
+        }
         var result = chatResponse.getResult();
+        if (result == null) {
+            throw new IllegalArgumentException("result must not be null");
+        }
 
         var delta = new Delta(result.getOutput().getText(), "assistant");
 
         var choice = new Choice(0, delta, result.getMetadata().getFinishReason());
 
         var metadata = chatResponse.getMetadata();
-        var usage = metadata.getUsage() != null ? mapUsage(metadata.getUsage()) : null;
+        var usage = mapUsage(metadata.getUsage());
 
         return ChatCompletionStreamResponse.builder().id(id).object("chat.completion.chunk")
                 .created(Instant.now().getEpochSecond()).model(metadata.getModel()).choices(List.of(choice))

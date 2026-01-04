@@ -15,7 +15,18 @@ public record ChatCompletionResponse(String id, String object, long created, Str
     public static ChatCompletionResponse from(ChatClientResponse clientResponse)
     {
         var chatResponse = clientResponse.chatResponse();
+        if (chatResponse == null) {
+            throw new IllegalArgumentException("chatResponse must not be null");
+        }
+
         var result = chatResponse.getResult();
+        if (result == null) {
+            throw new IllegalArgumentException("result must not be null");
+        }
+        if (result.getMetadata().getFinishReason() == null) {
+            throw new IllegalArgumentException("finish reason must not be null");
+        }
+
 
         var message = new Message("assistant", String.valueOf(result.getOutput().getText()));
 
@@ -31,10 +42,6 @@ public record ChatCompletionResponse(String id, String object, long created, Str
 
     private static Usage mapUsage(org.springframework.ai.chat.metadata.Usage aiUsage)
     {
-        if (aiUsage == null) {
-            return new Usage(0, 0, 0);
-        }
-
         return new Usage(Math.toIntExact(aiUsage.getPromptTokens()), Math.toIntExact(aiUsage.getCompletionTokens()),
                 Math.toIntExact(aiUsage.getTotalTokens()));
     }

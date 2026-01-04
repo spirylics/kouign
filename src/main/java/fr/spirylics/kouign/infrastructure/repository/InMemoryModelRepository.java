@@ -16,6 +16,6 @@ public class InMemoryModelRepository implements ModelRepository {
     @Override
     public Stream<Model> findAll()
     {
-        return kouignProperties.models().stream();
+        return kouignProperties.models().sequencedValues().stream();
     }
 }

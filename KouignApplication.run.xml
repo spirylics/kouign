@@ -6,36 +6,10 @@
         <option name="name" value="spring.docker.compose.enabled" />
         <option name="value" value="false" />
       </param>
-      <param>
-        <option name="enabled" value="true" />
-        <option name="name" value="spring.threads.virtual.enabled" />
-        <option name="value" value="false" />
-      </param>
-      <param>
-        <option name="enabled" value="true" />
-        <option name="name" value="kouign.random-pause" />
-        <option name="value" value="PT0.1S" />
-      </param>
-      <param>
-        <option name="enabled" value="true" />
-        <option name="name" value="server.tomcat.max-connections" />
-        <option name="value" value="10000" />
-      </param>
-      <param>
-        <option name="enabled" value="true" />
-        <option name="name" value="server.tomcat.threads.max" />
-        <option name="value" value="50" />
-      </param>
-      <param>
-        <option name="enabled" value="true" />
-        <option name="name" value="server.tomcat.accept-count" />
-        <option name="value" value="100" />
-      </param>
     </additionalParameters>
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <module name="kouign" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="fr.spirylics.kouign.KouignApplication" />
-    <option name="VM_PARAMETERS" value="-Xms128m -Xmx128m" />
     <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
     <extension name="coverage">
       <pattern>
