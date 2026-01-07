@@ -14,11 +14,17 @@ import fr.spirylics.kouign.domain.sugar.in.SugarService;
 import fr.spirylics.kouign.infrastructure.OpenAiLlmChatClient;
 import fr.spirylics.kouign.infrastructure.repository.GeocodingRepository;
 import fr.spirylics.kouign.infrastructure.repository.ItineraryRepository;
+import io.modelcontextprotocol.client.McpSyncClient;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,9 +62,11 @@ public class ApplicationConfig {
     }
 
     @Bean
-    ChatClient chatClient(final ChatModel chatModel)
+    ChatClient chatClient(final ChatModel chatModel, final List<McpSyncClient> mcpSyncClients)
     {
-        return ChatClient.builder(chatModel).build();
+        return ChatClient.builder(chatModel)
+                .defaultToolCallbacks(SyncMcpToolCallbackProvider.syncToolCallbacks(mcpSyncClients))
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(MessageWindowChatMemory.builder().build()).build(), new SimpleLoggerAdvisor()).build();
     }
 
     @Bean

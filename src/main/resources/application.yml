@@ -7,6 +7,18 @@ spring:
   ai:
     openai:
       base-url: http://localhost/ai/ollama
+    mcp:
+      client:
+        enabled: true
+        name: kouign-mcp-client
+        version: 1.0.0
+        request-timeout: 30s
+        type: SYNC
+        streamable-http:
+          connections:
+            context7:
+              url: http://localhost
+              endpoint: /context7/mcp
   mvc:
     apiversion:
       use:
