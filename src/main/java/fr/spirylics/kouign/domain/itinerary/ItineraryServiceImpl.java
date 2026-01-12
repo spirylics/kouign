@@ -1,6 +1,3 @@
-/*
- * Copyright (C) Deveryware S.A.S. All Rights Reserved.
- */
 package fr.spirylics.kouign.domain.itinerary;
 
 import fr.spirylics.kouign.domain.chat.in.ItineraryService;

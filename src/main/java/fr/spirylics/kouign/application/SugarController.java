@@ -1,6 +1,3 @@
-/*
- * Copyright (C) Deveryware S.A.S. All Rights Reserved.
- */
 package fr.spirylics.kouign.application;
 
 import fr.spirylics.kouign.domain.sugar.in.SugarService;

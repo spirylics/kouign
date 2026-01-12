@@ -1,6 +1,3 @@
-/*
- * Copyright (C) Deveryware S.A.S. All Rights Reserved.
- */
 package fr.spirylics.kouign.infrastructure.repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
