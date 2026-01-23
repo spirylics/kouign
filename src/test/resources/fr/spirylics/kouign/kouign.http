@@ -22,7 +22,7 @@ Accept: application/json
 GET {{baseUrl}}/api/v2.1.0/models
 Accept: application/json
 
-### chat/completions
+### chat/completions_basic
 POST {{apiUrl}}/chat/completions
 Content-Type: application/json
 Accept: application/json
@@ -33,6 +33,23 @@ Accept: application/json
     {
       "role": "user",
       "content": "1 + 2 = ?"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 100
+}
+
+### chat/completions_web-search
+POST {{apiUrl}}/chat/completions
+Content-Type: application/json
+Accept: application/json
+
+{
+  "model": "ker",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Recherche quel temps fait-il aujourd'hui à Vannes ?"
     }
   ],
   "temperature": 0.7,

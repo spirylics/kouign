@@ -1,6 +1,8 @@
 package fr.spirylics.kouign.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openai.client.OpenAIClient;
+import com.openai.client.okhttp.OpenAIOkHttpClient;
 import fr.spirylics.kouign.domain.chat.ChatServiceImpl;
 import fr.spirylics.kouign.domain.chat.in.ChatService;
 import fr.spirylics.kouign.domain.chat.in.ItineraryService;
@@ -20,14 +22,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
-import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.ai.openai.api.OpenAiApi;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ai.openaisdk.OpenAiSdkChatModel;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,15 +49,9 @@ public class ApplicationConfig {
     }
 
     @Bean
-    OpenAiApi openAiApi(@Value("${spring.ai.openai.base-url}") final String baseUrl)
-    {
-        return OpenAiApi.builder().baseUrl(baseUrl).apiKey("apiKey").build();
-    }
-
-    @Bean
-    ChatModel chatModel(final OpenAiApi openAiApi)
-    {
-        return OpenAiChatModel.builder().openAiApi(openAiApi).build();
+    @ConditionalOnMissingBean
+    public OpenAIClient openAIClient() {
+        return OpenAIOkHttpClient.fromEnv();
     }
 
     @Bean

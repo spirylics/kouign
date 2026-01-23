@@ -1,21 +1,22 @@
 package fr.spirylics.kouign.infrastructure;
 
+import com.openai.client.OpenAIClient;
+import com.openai.core.http.StreamResponse;
+import com.openai.models.chat.completions.ChatCompletion;
+import com.openai.models.chat.completions.ChatCompletionChunk;
+import com.openai.models.chat.completions.ChatCompletionCreateParams;
 import fr.spirylics.kouign.domain.chat.out.LlmChatClient;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.ChatClient.CallResponseSpec;
-import org.springframework.ai.chat.client.ChatClient.StreamResponseSpec;
-import org.springframework.ai.chat.prompt.Prompt;
 
-public record OpenAiLlmChatClient(ChatClient chatClient) implements LlmChatClient {
+public record OpenAiLlmChatClient(OpenAIClient chatClient) implements LlmChatClient {
     @Override
-    public CallResponseSpec call(final Prompt prompt)
+    public ChatCompletion call(final ChatCompletionCreateParams params)
     {
-        return chatClient().prompt(prompt).call();
+        return chatClient.chat().completions().create(params);
     }
 
     @Override
-    public StreamResponseSpec stream(final Prompt prompt)
+    public StreamResponse<ChatCompletionChunk> stream(final ChatCompletionCreateParams params)
     {
-        return chatClient().prompt(prompt).stream();
+        return chatClient.chat().completions().createStreaming(params);
     }
 }

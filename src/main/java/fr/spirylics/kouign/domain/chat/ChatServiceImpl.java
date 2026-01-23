@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openaisdk.OpenAiSdkChatOptions;
 
 public record ChatServiceImpl(LlmChatClient llmChatClient, ModelService modelService) implements ChatService {
     @Override
@@ -29,7 +29,7 @@ public record ChatServiceImpl(LlmChatClient llmChatClient, ModelService modelSer
         final var promptBuilder = prompt.mutate();
         final ChatOptions opts;
         final String model;
-        final var optsBuilder = OpenAiChatOptions.builder();
+        final var optsBuilder = OpenAiSdkChatOptions.builder();
         if ((opts = prompt.getOptions()) != null) {
             if ((model = opts.getModel()) != null) {
                 modelService.findById(model).findFirst().map(Model::baseModel).ifPresent(optsBuilder::model);
