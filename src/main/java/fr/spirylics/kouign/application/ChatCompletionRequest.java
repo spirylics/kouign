@@ -1,6 +1,7 @@
 package fr.spirylics.kouign.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openai.models.chat.completions.ChatCompletionCreateParams;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,7 +22,7 @@ public record ChatCompletionRequest(String model, List<Message> messages, @Nulla
                                     @JsonProperty("top_p") @Nullable Double topP, @Nullable Integer n,
                                     @JsonProperty("logit_bias") @Nullable Map<String, Integer> logitBias,
                                     @Nullable String user) {
-    public Prompt toPrompt()
+    public ChatCompletionCreateParams toParams()
     {
         var aiMessages = messages.stream().<org.springframework.ai.chat.messages.Message>map(
                 msg -> switch (msg.role.toLowerCase(Locale.ROOT)) {

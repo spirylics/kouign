@@ -25,7 +25,7 @@ public class ChatController {
         if (Boolean.TRUE.equals(request.stream())) {
             return streamCompletions(request);
         }
-        var clientResponse = chatService.completions(request.toPrompt());
+        var clientResponse = chatService.completions(request.toParams());
         return ChatCompletionResponse.from(clientResponse);
     }
 
@@ -34,7 +34,7 @@ public class ChatController {
         var emitter = new SseEmitter();
         var streamId = ChatCompletionStreamResponse.generateId();
 
-        chatService.stream(request.toPrompt(), clientResponse -> {
+        chatService.completions(request.toParams(), clientResponse -> {
             try {
                 var streamResponse = ChatCompletionStreamResponse.from(clientResponse, streamId);
                 var json = objectMapper.writeValueAsString(streamResponse);
@@ -42,14 +42,14 @@ public class ChatController {
             } catch (IOException e) {
                 emitter.completeWithError(e);
             }
-        }, () -> {
-            try {
-                emitter.send(SseEmitter.event().data("[DONE]").name("message"));
-                emitter.complete();
-            } catch (IOException e) {
-                emitter.completeWithError(e);
-            }
         });
+
+        try {
+            emitter.send(SseEmitter.event().data("[DONE]").name("message"));
+            emitter.complete();
+        } catch (IOException e) {
+            emitter.completeWithError(e);
+        }
 
         return emitter;
     }

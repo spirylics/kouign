@@ -1,6 +1,7 @@
 package fr.spirylics.kouign.application;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openai.models.chat.completions.ChatCompletion;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import org.springframework.ai.chat.client.ChatClientResponse;
 public record ChatCompletionResponse(String id, String object, long created, String model, List<Choice> choices,
                                      Usage usage) {
 
-    public static ChatCompletionResponse from(ChatClientResponse clientResponse)
+    public static ChatCompletionResponse from(ChatCompletion clientResponse)
     {
         var chatResponse = clientResponse.chatResponse();
         if (chatResponse == null) {

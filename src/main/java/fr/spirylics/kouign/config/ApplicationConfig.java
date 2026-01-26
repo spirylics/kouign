@@ -66,9 +66,9 @@ public class ApplicationConfig {
     }
 
     @Bean
-    LlmChatClient llmChatClient(final ChatClient chatClient)
+    LlmChatClient llmChatClient(final OpenAIClient openAIClient)
     {
-        return new OpenAiLlmChatClient(chatClient);
+        return new OpenAiLlmChatClient(openAIClient);
     }
 
     @Bean
