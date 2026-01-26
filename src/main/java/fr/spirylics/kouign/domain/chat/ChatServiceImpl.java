@@ -1,5 +1,8 @@
 package fr.spirylics.kouign.domain.chat;
 
+import com.openai.models.chat.completions.ChatCompletion;
+import com.openai.models.chat.completions.ChatCompletionChunk;
+import com.openai.models.chat.completions.ChatCompletionCreateParams;
 import fr.spirylics.kouign.domain.chat.in.ChatService;
 import fr.spirylics.kouign.domain.chat.out.LlmChatClient;
 import fr.spirylics.kouign.domain.model.Model;
@@ -12,19 +15,20 @@ import org.springframework.ai.openaisdk.OpenAiSdkChatOptions;
 
 public record ChatServiceImpl(LlmChatClient llmChatClient, ModelService modelService) implements ChatService {
     @Override
-    public ChatClientResponse completions(final Prompt prompt)
+    public ChatCompletion completions(final ChatCompletionCreateParams request)
     {
-        return llmChatClient().call(enhance(prompt)).chatClientResponse();
+        return llmChatClient().completions(request);
     }
 
     @Override
-    public void stream(final Prompt prompt, final Consumer<ChatClientResponse> onNext, final Runnable onComplete)
+    public void completions(final ChatCompletionCreateParams params, final Consumer<ChatCompletionChunk> read)
     {
-        llmChatClient().stream(enhance(prompt)).chatClientResponse().doOnNext(onNext).doOnComplete(onComplete)
-                .subscribe();
+        try (var response = llmChatClient().completionsStream(enhance(params))){
+            response.stream().forEach(read);
+        }
     }
 
-    Prompt enhance(final Prompt prompt)
+    ChatCompletionCreateParams enhance(final ChatCompletionCreateParams params)
     {
         final var promptBuilder = prompt.mutate();
         final ChatOptions opts;

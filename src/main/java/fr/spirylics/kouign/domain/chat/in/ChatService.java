@@ -1,11 +1,15 @@
 package fr.spirylics.kouign.domain.chat.in;
 
 import java.util.function.Consumer;
+
+import com.openai.models.chat.completions.ChatCompletion;
+import com.openai.models.chat.completions.ChatCompletionChunk;
+import com.openai.models.chat.completions.ChatCompletionCreateParams;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 
 public interface ChatService {
-    ChatClientResponse completions(final Prompt prompt);
+    ChatCompletion completions(final ChatCompletionCreateParams request);
 
-    void stream(final Prompt prompt, Consumer<ChatClientResponse> onNext, Runnable onComplete);
+    void completions(final ChatCompletionCreateParams request, Consumer<ChatCompletionChunk> read);
 }

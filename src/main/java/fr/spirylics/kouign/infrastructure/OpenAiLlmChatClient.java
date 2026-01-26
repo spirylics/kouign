@@ -9,13 +9,13 @@ import fr.spirylics.kouign.domain.chat.out.LlmChatClient;
 
 public record OpenAiLlmChatClient(OpenAIClient chatClient) implements LlmChatClient {
     @Override
-    public ChatCompletion call(final ChatCompletionCreateParams params)
+    public ChatCompletion completions(final ChatCompletionCreateParams params)
     {
         return chatClient.chat().completions().create(params);
     }
 
     @Override
-    public StreamResponse<ChatCompletionChunk> stream(final ChatCompletionCreateParams params)
+    public StreamResponse<ChatCompletionChunk> completionsStream(final ChatCompletionCreateParams params)
     {
         return chatClient.chat().completions().createStreaming(params);
     }
